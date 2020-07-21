@@ -22,8 +22,4 @@ on_success:
     - for /d %%p IN (*) do rmdir "%%p" /s /q
     - SETLOCAL EnableDelayedExpansion & robocopy "%APPVEYOR_BUILD_FOLDER%\public" "%TEMP%\staic-site-nothing" /e & IF !ERRORLEVEL! EQU 1 (exit 0) ELSE (IF !ERRORLEVEL! EQU 3 (exit 0) ELSE (exit 1))
     - git add -A
-    - appveyor AddMessage "%APPVEYOR_PULL_REQUEST_NUMBER%\APPVEYOR_PULL_REQUEST_NUMBER"
-    - echo %APPVEYOR_PULL_REQUEST_NUMBER%
-    - appveyor AddMessage "%TARGET_BRANCH%\TARGET_BRANCH"
-    - echo %TARGET_BRANCH%
     - if "%APPVEYOR_REPO_BRANCH%"=="hexo" if not defined APPVEYOR_PULL_REQUEST_NUMBER (git diff --quiet --exit-code --cached || git commit -m "Update Static Site" && git push origin %TARGET_BRANCH% && appveyor AddMessage "Static Site Updated")
